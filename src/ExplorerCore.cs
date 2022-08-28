@@ -12,22 +12,32 @@ using UnityExplorer.ObjectExplorer;
 using UnityExplorer.Runtime;
 using UnityExplorer.UI;
 using UnityExplorer.UI.Panels;
+using UniverseLib.UI.Panels;
 using UniverseLib.Input;
 
 namespace UnityExplorer
 {
     public static class ExplorerCore
     {
+        public enum RightClickAction
+        {
+            None,
+            Rotate,
+            RotateAndDeselect
+        }
+        
         public const string NAME = "UnityExplorer";
         public const string VERSION = "4.9.0";
         public const string AUTHOR = "Sinai";
         public const string GUID = "com.sinai.unityexplorer";
 
         public static IExplorerLoader Loader { get; private set; }
-        public static string ExplorerFolder => Path.Combine(Loader.ExplorerFolderDestination, Loader.ExplorerFolderName);
-        public const string DEFAULT_EXPLORER_FOLDER_NAME = "sinai-dev-UnityExplorer";
+        public static string ExplorerFolder => Path.Combine(Application.persistentDataPath, Loader.ExplorerFolderName);
+        public const string DEFAULT_EXPLORER_FOLDER_NAME = "UnityExplorer";
 
-        public static HarmonyLib.Harmony Harmony { get; } = new HarmonyLib.Harmony(GUID);
+        public static HarmonyXLib.Harmony Harmony { get; } = new HarmonyXLib.Harmony(GUID);
+        
+        public static RightClickAction RCAction = RightClickAction.RotateAndDeselect;
 
         /// <summary>
         /// Initialize UnityExplorer with the provided Loader implementation.
@@ -48,7 +58,7 @@ namespace UnityExplorer
             Universe.Init(ConfigManager.Startup_Delay_Time.Value, LateInit, Log, new()
             {
                 Disable_EventSystem_Override = ConfigManager.Disable_EventSystem_Override.Value,
-                Force_Unlock_Mouse = ConfigManager.Force_Unlock_Mouse.Value,
+                Force_Unlock_Mouse = true,
                 Unhollowed_Modules_Folder = loader.UnhollowedModulesFolder
             });
 
@@ -79,6 +89,11 @@ namespace UnityExplorer
             if (InputManager.GetKeyDown(ConfigManager.Master_Toggle.Value))
             {
                 UIManager.ShowMenu = !UIManager.ShowMenu;
+                CursorUnlocker.ForceDisableCursor = false;
+                Cursor.visible = true;
+                PanelManager.UpdateMouseControls = UIManager.ShowMenu;
+                if(!UIManager.ShowMenu)
+                    Universe.ToggleMouseControls(true);
             }
         }
 

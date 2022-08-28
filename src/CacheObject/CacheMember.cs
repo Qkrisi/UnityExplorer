@@ -8,6 +8,7 @@ namespace UnityExplorer.CacheObject
     public abstract class CacheMember : CacheObjectBase
     {
         public abstract Type DeclaringType { get; }
+        public bool IsInherited { get; private set; }
         public string NameForFiltering { get; protected set; }
         public object DeclaringInstance => IsStatic ? null : (m_declaringInstance ??= Owner.Target.TryCast(DeclaringType));
         private object m_declaringInstance;
@@ -31,6 +32,7 @@ namespace UnityExplorer.CacheObject
 
             this.NameForFiltering = SignatureHighlighter.RemoveHighlighting(NameLabelText);
             this.NameLabelTextRaw = NameForFiltering;
+            this.IsInherited = member.DeclaringType != member.ReflectedType;
         }
 
         public override void ReleasePooledObjects()

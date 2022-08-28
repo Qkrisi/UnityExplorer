@@ -8,7 +8,7 @@ namespace UnityExplorer.UI
     {
         public UEPanelManager(UIBase owner) : base(owner) { }
 
-        protected override Vector3 MousePosition => DisplayManager.MousePosition;
+        public override Vector3 MousePosition => DisplayManager.MousePosition;
 
         protected override Vector2 ScreenDimensions => new(DisplayManager.Width, DisplayManager.Height);
 

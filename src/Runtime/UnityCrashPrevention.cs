@@ -2,7 +2,7 @@
 {
     internal static class UnityCrashPrevention
     {
-        static readonly HarmonyLib.Harmony harmony = new($"{ExplorerCore.GUID}.crashprevention");
+        static readonly HarmonyXLib.Harmony harmony = new($"{ExplorerCore.GUID}.crashprevention");
 
         internal static void Init()
         {
@@ -19,8 +19,8 @@
             try
             {
                 harmony.Patch(
-                    HarmonyLib.AccessTools.Method(typeof(T), orig, argTypes),
-                    new HarmonyLib.HarmonyMethod(HarmonyLib.AccessTools.Method(typeof(UnityCrashPrevention), prefix)));
+                    HarmonyXLib.AccessTools.Method(typeof(T), orig, argTypes),
+                    new HarmonyXLib.HarmonyMethod(HarmonyXLib.AccessTools.Method(typeof(UnityCrashPrevention), prefix)));
             }
             catch //(Exception ex)
             {

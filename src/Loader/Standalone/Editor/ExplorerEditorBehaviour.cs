@@ -50,8 +50,8 @@ namespace UnityExplorer.Loader.Standalone
             ConfigManager.Startup_Delay_Time.Value = this.Startup_Delay_Time;
             ConfigManager.World_MouseInspect_Keybind.Value = this.World_MouseInspect_Keybind;
             ConfigManager.UI_MouseInspect_Keybind.Value = this.UI_MouseInspect_Keybind;
-            ConfigManager.Force_Unlock_Mouse.Value = this.Force_Unlock_Mouse;
-            ConfigManager.Force_Unlock_Toggle.Value = this.Force_Unlock_Toggle;
+            /*ConfigManager.Force_Unlock_Mouse.Value = this.Force_Unlock_Mouse;
+            ConfigManager.Force_Unlock_Toggle.Value = this.Force_Unlock_Toggle;*/
             ConfigManager.Disable_EventSystem_Override.Value = this.Disable_EventSystem_Override;
         }
     }

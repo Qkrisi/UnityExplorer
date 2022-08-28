@@ -17,16 +17,18 @@ namespace UnityExplorer.Config
         public static ConfigElement<float> Startup_Delay_Time;
         public static ConfigElement<bool> Disable_EventSystem_Override;
         public static ConfigElement<int> Target_Display;
-        public static ConfigElement<bool> Force_Unlock_Mouse;
-        public static ConfigElement<KeyCode> Force_Unlock_Toggle;
+        //public static ConfigElement<bool> Force_Unlock_Mouse;
+        //public static ConfigElement<KeyCode> Force_Unlock_Toggle;
         public static ConfigElement<string> Default_Output_Path;
         public static ConfigElement<string> DnSpy_Path;
         public static ConfigElement<bool> Log_Unity_Debug;
         public static ConfigElement<UIManager.VerticalAnchor> Main_Navbar_Anchor;
         public static ConfigElement<KeyCode> World_MouseInspect_Keybind;
+        //public static ConfigElement<bool> World_MouseInspect_IgnoreHighlights;
         public static ConfigElement<KeyCode> UI_MouseInspect_Keybind;
         public static ConfigElement<string> CSConsole_Assembly_Blacklist;
         public static ConfigElement<string> Reflection_Signature_Blacklist;
+        public static ConfigElement<ExplorerCore.RightClickAction> Right_Click_Action;
 
         // internal configs
         internal static InternalConfigHandler InternalHandler { get; private set; }
@@ -75,11 +77,11 @@ namespace UnityExplorer.Config
         {
             Master_Toggle = new("UnityExplorer Toggle",
                 "The key to enable or disable UnityExplorer's menu and features.",
-                KeyCode.F7);
+                KeyCode.F12);
 
             Hide_On_Startup = new("Hide On Startup",
                 "Should UnityExplorer be hidden on startup?",
-                false);
+                true);
 
             Startup_Delay_Time = new("Startup Delay Time",
                 "The delay on startup before the UI is created.",
@@ -90,14 +92,14 @@ namespace UnityExplorer.Config
                 "Restart recommended when changing this setting. Make sure your extra monitors are the same resolution as your primary monitor.",
                 0);
 
-            Force_Unlock_Mouse = new("Force Unlock Mouse",
+            /*Force_Unlock_Mouse = new("Force Unlock Mouse",
                 "Force the Cursor to be unlocked (visible) when the UnityExplorer menu is open.",
                 true);
             Force_Unlock_Mouse.OnValueChanged += (bool value) => UniverseLib.Config.ConfigManager.Force_Unlock_Mouse = value;
 
             Force_Unlock_Toggle = new("Force Unlock Toggle Key",
                 "The keybind to toggle the 'Force Unlock Mouse' setting. Only usable when UnityExplorer is open.",
-                KeyCode.None);
+                KeyCode.None);*/
 
             Disable_EventSystem_Override = new("Disable EventSystem override",
                 "If enabled, UnityExplorer will not override the EventSystem from the game.\n<b>May require restart to take effect.</b>",
@@ -114,7 +116,7 @@ namespace UnityExplorer.Config
 
             Main_Navbar_Anchor = new("Main Navbar Anchor",
                 "The vertical anchor of the main UnityExplorer Navbar, in case you want to move it.",
-                UIManager.VerticalAnchor.Top);
+                UIManager.VerticalAnchor.Bottom);
 
             Log_Unity_Debug = new("Log Unity Debug",
                 "Should UnityEngine.Debug.Log messages be printed to UnityExplorer's log?",
@@ -123,6 +125,9 @@ namespace UnityExplorer.Config
             World_MouseInspect_Keybind = new("World Mouse-Inspect Keybind",
                 "Optional keybind to being a World-mode Mouse Inspect.",
                 KeyCode.None);
+            
+            /*World_MouseInspect_IgnoreHighlights = new("World Mouse-Inspect ignore highlights", "Ignore highlight objects when searching for objects via mouse", true);
+            World_MouseInspect_IgnoreHighlights.OnValueChanged += (bool value) => UnityExplorer.Inspectors.MouseInspectors.WorldInspector.IgnoreHighlights = value;*/
 
             UI_MouseInspect_Keybind = new("UI Mouse-Inspect Keybind",
                 "Optional keybind to begin a UI-mode Mouse Inspect.",
@@ -139,6 +144,9 @@ namespace UnityExplorer.Config
                 "Seperate signatures with a semicolon ';'.\r\n" +
                 "For example, to blacklist Camera.main, you would add 'UnityEngine.Camera.main;'",
                 "");
+            
+            Right_Click_Action = new("Right Click Action", "The right click action in KTaNE that will happen when the cursor is over a Unity Explorer panel", ExplorerCore.RightClickAction.RotateAndDeselect);
+            Right_Click_Action.OnValueChanged += (ExplorerCore.RightClickAction value) => ExplorerCore.RCAction = value;
         }
     }
 }

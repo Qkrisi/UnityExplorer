@@ -30,6 +30,8 @@ namespace UnityExplorer.UI
             Top,
             Bottom
         }
+        
+        public static Action InitCallback;
 
         public static VerticalAnchor NavbarAnchor = VerticalAnchor.Top;
 
@@ -110,6 +112,8 @@ namespace UnityExplorer.UI
 
             if (ConfigManager.Hide_On_Startup.Value)
                 ShowMenu = false;
+            
+            InitCallback?.Invoke();
         }
 
         // Main UI Update loop
@@ -127,8 +131,8 @@ namespace UnityExplorer.UI
             Notification.Update();
 
             // Check forceUnlockMouse toggle
-            if (InputManager.GetKeyDown(ConfigManager.Force_Unlock_Toggle.Value))
-                UniverseLib.Config.ConfigManager.Force_Unlock_Mouse = !UniverseLib.Config.ConfigManager.Force_Unlock_Mouse;
+            /*if (InputManager.GetKeyDown(ConfigManager.Force_Unlock_Toggle.Value))
+                UniverseLib.Config.ConfigManager.Force_Unlock_Mouse = !UniverseLib.Config.ConfigManager.Force_Unlock_Mouse;*/
 
             // update the timescale value
             timeScaleWidget.Update();

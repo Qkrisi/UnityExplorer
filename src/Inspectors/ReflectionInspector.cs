@@ -22,7 +22,8 @@ namespace UnityExplorer.Inspectors
         Field = 2,
         Constructor = 4,
         Method = 8,
-        All = Property | Field | Method | Constructor,
+        Inherited = 16,
+        All = Property | Field | Method | Constructor | Inherited,
     }
 
     public class ReflectionInspector : InspectorBase, ICellPoolDataSource<CacheMemberCell>, ICacheObjectController
@@ -258,7 +259,8 @@ namespace UnityExplorer.Inspectors
                 if ((member is CacheMethod && !memberFilter.HasFlag(MemberFilter.Method))
                     || (member is CacheField && !memberFilter.HasFlag(MemberFilter.Field))
                     || (member is CacheProperty && !memberFilter.HasFlag(MemberFilter.Property))
-                    || (member is CacheConstructor && !memberFilter.HasFlag(MemberFilter.Constructor)))
+                    || (member is CacheConstructor && !memberFilter.HasFlag(MemberFilter.Constructor))
+                    || (member.IsInherited && !memberFilter.HasFlag(MemberFilter.Inherited)))
                     continue;
 
                 if (!string.IsNullOrEmpty(nameFilter) && !member.NameForFiltering.ContainsIgnoreCase(nameFilter))
