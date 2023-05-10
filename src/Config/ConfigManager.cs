@@ -77,7 +77,7 @@ namespace UnityExplorer.Config
         {
             Master_Toggle = new("UnityExplorer Toggle",
                 "The key to enable or disable UnityExplorer's menu and features.",
-                KeyCode.F12);
+                KeyCode.F11);
 
             Hide_On_Startup = new("Hide On Startup",
                 "Should UnityExplorer be hidden on startup?",
