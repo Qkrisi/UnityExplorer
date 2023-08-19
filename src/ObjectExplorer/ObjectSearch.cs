@@ -184,6 +184,7 @@ namespace UnityExplorer.ObjectExplorer
 
             InputFieldRef classInputField = UIFactory.CreateInputField(classInputRow, "ClassInput", "...");
             UIFactory.SetLayoutElement(classInputField.UIRoot, minHeight: 25, flexibleHeight: 0, flexibleWidth: 9999);
+            classInputField.Component.GetOnEndEdit().AddListener(_ => DoSearch());
 
             unityObjectTypeCompleter = new(typeof(UnityEngine.Object), classInputField, true, false, true);
             allTypesCompleter = new(null, classInputField, true, false, true);
@@ -236,6 +237,7 @@ namespace UnityExplorer.ObjectExplorer
 
             nameInputField = UIFactory.CreateInputField(nameInputRow, "NameFilterInput", "...");
             UIFactory.SetLayoutElement(nameInputField.UIRoot, minHeight: 25, flexibleHeight: 0, flexibleWidth: 9999);
+            nameInputField.Component.GetOnEndEdit().AddListener(_ => DoSearch());
 
             // Search button
 
