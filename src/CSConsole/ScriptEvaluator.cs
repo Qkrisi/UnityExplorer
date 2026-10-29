@@ -23,16 +23,19 @@ namespace UnityExplorer.CSConsole
             _textWriter = tw;
 
             ImportAppdomainAssemblies();
-            AppDomain.CurrentDomain.AssemblyLoad += OnAssemblyLoad;
+            
+            AssemblyCacheQueue.OnAssemblyDequeue += ReferenceAsm;
+            //AppDomain.CurrentDomain.AssemblyLoad += OnAssemblyLoad;
         }
 
         public void Dispose()
         {
-            AppDomain.CurrentDomain.AssemblyLoad -= OnAssemblyLoad;
+            //AppDomain.CurrentDomain.AssemblyLoad -= OnAssemblyLoad;
+            AssemblyCacheQueue.OnAssemblyDequeue -= ReferenceAsm;
             _textWriter.Dispose();
         }
 
-        private void OnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
+        /*private void OnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
             string name = args.LoadedAssembly.GetName().Name;
 
@@ -40,6 +43,13 @@ namespace UnityExplorer.CSConsole
                 return;
 
             Reference(args.LoadedAssembly);
+        }*/
+
+        private void ReferenceAsm(Assembly asm)
+        {
+            if (StdLib.Contains(asm.GetName().Name))
+                return;
+            Reference(asm);
         }
 
         private void Reference(Assembly asm)

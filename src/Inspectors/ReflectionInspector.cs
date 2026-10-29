@@ -75,6 +75,7 @@ namespace UnityExplorer.Inspectors
 
         InputFieldRef filterInputField;
         readonly List<Toggle> memberTypeToggles = new();
+        //Toggle InheritedToggle;
         readonly Dictionary<BindingFlags, ButtonRef> scopeFilterButtons = new();
 
         // Setup
@@ -182,6 +183,7 @@ namespace UnityExplorer.Inspectors
 
             foreach (Toggle toggle in memberTypeToggles)
                 toggle.isOn = true;
+            //InheritedToggle.isOn = true;
 
             refreshWanted = true;
         }
@@ -544,6 +546,15 @@ namespace UnityExplorer.Inspectors
             AddMemberTypeToggle(rowObj, MemberTypes.Field, 70);
             AddMemberTypeToggle(rowObj, MemberTypes.Method, 90);
             AddMemberTypeToggle(rowObj, MemberTypes.Constructor, 110);
+            
+            /*
+            // Inherited filter
+            var inheritedToggleObj = UIFactory.CreateToggle(parent, "Toggle_Inherited", out InheritedToggle, out Text inheritedToggleText);
+            UIFactory.SetLayoutElement(inheritedToggleObj, minHeight: 25, minWidth: 100);
+            inheritedToggleText.text ="<color=#ffff00>Inherited</color>";
+            InheritedToggle.graphic.TryCast<Image>().color = "#ffff00".ToColor() * 0.65f;
+            InheritedToggle.onValueChanged.AddListener((bool val) => OnMemberTypeToggled(MemberFilter.Inherited, val));
+            */
         }
 
         void AddScopeFilterButton(GameObject parent, BindingFlags flags, bool setAsActive = false)
